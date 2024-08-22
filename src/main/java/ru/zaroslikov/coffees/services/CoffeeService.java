@@ -2,8 +2,9 @@ package ru.zaroslikov.coffees.services;
 
 
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import ru.zaroslikov.coffees.models.Coffee;
 import ru.zaroslikov.coffees.repositories.CoffeeRepository;
 
@@ -30,7 +31,18 @@ public class CoffeeService {
     }
 
     @Transactional
-   public void save(Coffee coffee){
-        coffeeRepository.save(coffee);
-     }
+    public ResponseEntity<Coffee> save(Coffee coffee) {
+        return (coffeeRepository.findByName(coffee.getName()).isEmpty()) ? new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @Transactional
+    public ResponseEntity<Coffee> put(Coffee coffee, int id) {
+        return (!coffeeRepository.existsById(id)) ? new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.CREATED) :
+                new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.OK);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        coffeeRepository.delete(findOne(id));
+    }
 }

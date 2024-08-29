@@ -4,6 +4,7 @@ import org.apache.catalina.connector.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.zaroslikov.coffees.dto.CoffeeDTO;
@@ -13,7 +14,7 @@ import ru.zaroslikov.coffees.services.CoffeeService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class RestCoffee {
 
     private final CoffeeService coffeeService;
@@ -21,6 +22,7 @@ public class RestCoffee {
     public RestCoffee(CoffeeService coffeeService) {
         this.coffeeService = coffeeService;
     }
+
 
 
     @GetMapping("/coffees")

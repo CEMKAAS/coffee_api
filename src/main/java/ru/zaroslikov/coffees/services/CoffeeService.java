@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import ru.zaroslikov.coffees.dto.CoffeeDTO;
 import ru.zaroslikov.coffees.models.Coffee;
 import ru.zaroslikov.coffees.repositories.CoffeeRepository;
 
@@ -16,13 +17,17 @@ import java.util.Optional;
 public class CoffeeService {
 
     private final CoffeeRepository coffeeRepository;
+//    public final CoffeeDtoRepository coffeeDtoRepository;
 
-    public CoffeeService(CoffeeRepository coffeeRepository) {
+    public CoffeeService(CoffeeRepository coffeeRepository
+//                         ,CoffeeDtoRepository coffeeDtoRepository
+    ) {
         this.coffeeRepository = coffeeRepository;
+//        this.coffeeDtoRepository = coffeeDtoRepository;
     }
 
-    public List<Coffee> findAll() {
-        return coffeeRepository.findAll();
+    public List<CoffeeDTO> findAll() {
+        return coffeeRepository.findAllNameSumCount();
     }
 
     public Coffee findOne(int id) {
@@ -32,7 +37,7 @@ public class CoffeeService {
 
     @Transactional
     public ResponseEntity<Coffee> save(Coffee coffee) {
-        return (coffeeRepository.findByName(coffee.getName()).isEmpty()) ? new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.CREATED);
     }
 
     @Transactional
@@ -45,4 +50,5 @@ public class CoffeeService {
     public void delete(int id) {
         coffeeRepository.delete(findOne(id));
     }
+
 }

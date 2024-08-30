@@ -1,10 +1,7 @@
 package ru.zaroslikov.coffees.controllers;
 
-import org.apache.catalina.connector.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.zaroslikov.coffees.dto.CoffeeDTO;
@@ -12,22 +9,23 @@ import ru.zaroslikov.coffees.models.Coffee;
 import ru.zaroslikov.coffees.services.CoffeeService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping
 public class RestCoffee {
 
     private final CoffeeService coffeeService;
+    private final ModelMapper modelMapper;
 
-    public RestCoffee(CoffeeService coffeeService) {
+    public RestCoffee(CoffeeService coffeeService, ModelMapper modelMapper) {
         this.coffeeService = coffeeService;
+        this.modelMapper = modelMapper;
     }
 
-
-
     @GetMapping("/coffees")
-    Iterable<Coffee> getCoffees() {
-        return coffeeService.findAll();
+    public List<Coffee> getCoffees() {
+        return coffeeService.findAll().stream().map(this::convertToCoffee).collect(Collectors.toList());
     }
 
     @GetMapping("/coffee")
@@ -46,12 +44,10 @@ public class RestCoffee {
     }
 
     private Coffee convertToCoffee(CoffeeDTO coffeeDTO) {
-        ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(coffeeDTO, Coffee.class);
     }
 
-    private CoffeeDTO convertToCoffeeDTO(Coffee coffee){
-        ModelMapper modelMapper = new ModelMapper();
+    private CoffeeDTO convertToCoffeeDTO(Coffee coffee) {
         return modelMapper.map(coffee, CoffeeDTO.class);
     }
 

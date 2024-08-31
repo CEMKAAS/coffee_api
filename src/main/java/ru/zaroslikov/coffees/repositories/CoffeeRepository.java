@@ -10,7 +10,7 @@ import java.util.List;
 public interface CoffeeRepository extends JpaRepository<Coffee, Integer> {
      List<Coffee> findByName(String name);
 
-     @Query(value = "SELECT name, SUM(Coffee.count) AS countCoffee from Coffee group by name order by countCoffee DESC",
+     @Query(value = "SELECT name, SUM(Coffee.quantity) AS quantity from Coffee group by name order by quantity DESC",
              nativeQuery = true)
      List<CoffeeDTO> findAllNameSumCount();
 }

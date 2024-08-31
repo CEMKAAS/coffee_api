@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class CoffeeDTO {
     private String name;
-    private int countCoffee;
+    private int quantity;
 }

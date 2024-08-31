@@ -10,5 +10,5 @@ public class Coffee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private int count;
+    private int quantity;
 }

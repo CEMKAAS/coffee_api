@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.zaroslikov.coffees.dto.CoffeeDTO;
+import ru.zaroslikov.coffees.dto.CoffeeDTOO;
 import ru.zaroslikov.coffees.models.Coffee;
 import ru.zaroslikov.coffees.repositories.CoffeeRepository;
 
@@ -26,7 +27,7 @@ public class CoffeeService {
 //        this.coffeeDtoRepository = coffeeDtoRepository;
     }
 
-    public List<CoffeeDTO> findAll() {
+    public List<CoffeeDTOO> findAll() {
         return coffeeRepository.findAllNameSumCount();
     }
 

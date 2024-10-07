@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.zaroslikov.coffees.dto.CoffeeDTO;
+import ru.zaroslikov.coffees.dto.CoffeeDTOO;
 import ru.zaroslikov.coffees.models.Coffee;
 import ru.zaroslikov.coffees.services.CoffeeService;
 
@@ -24,8 +25,8 @@ public class RestCoffee {
     }
 
     @GetMapping("/coffees")
-    public List<Coffee> getCoffees() {
-        return coffeeService.findAll().stream().map(this::convertToCoffee).collect(Collectors.toList());
+    public List<CoffeeDTOO> getCoffees() {
+        return coffeeService.findAll();
     }
 
     @GetMapping("/coffee")
@@ -33,7 +34,7 @@ public class RestCoffee {
         return " Где кофее";
     }
 
-    @GetMapping("/coffee/{id}")
+    @GetMapping("/coffees/{id}")
     public CoffeeDTO getCoffee(@PathVariable("id") int id) {
         return convertToCoffeeDTO(coffeeService.findOne(id));
     }

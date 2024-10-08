@@ -8,6 +8,7 @@ import ru.zaroslikov.coffees.dto.CoffeeDTO;
 import ru.zaroslikov.coffees.dto.CoffeeDTOO;
 import ru.zaroslikov.coffees.models.Coffee;
 import ru.zaroslikov.coffees.services.CoffeeService;
+import ru.zaroslikov.coffees.services.PersonDetailsService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,13 +19,15 @@ public class RestCoffee {
 
     private final CoffeeService coffeeService;
     private final ModelMapper modelMapper;
+    private final PersonDetailsService personDetailsService;
 
-    public RestCoffee(CoffeeService coffeeService, ModelMapper modelMapper) {
+    public RestCoffee(CoffeeService coffeeService, ModelMapper modelMapper, PersonDetailsService personDetailsService) {
         this.coffeeService = coffeeService;
         this.modelMapper = modelMapper;
+        this.personDetailsService = personDetailsService;
     }
 
-    @GetMapping("/coffees")
+    @GetMapping("/")
     public List<CoffeeDTOO> getCoffees() {
         return coffeeService.findAll();
     }
